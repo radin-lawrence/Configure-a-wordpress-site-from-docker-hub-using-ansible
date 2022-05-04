@@ -151,6 +151,9 @@ Execute the playbook
  ```bash
  ansible-playbook -i hosts docker-container
  ```
+ Now our setup is complete and you can point your server public IP to the domain name.
+ ![image](https://user-images.githubusercontent.com/100775027/166637067-2f2f0b3d-e17b-4626-bdb2-8672fb2ac9cf.png)
+
  
 ## Conclusion
 This is how we create wordpress site using docker-container with Ansible. Please contact me when you encounter any difficulty error while using this terrform code. Thank you and have a great day!
