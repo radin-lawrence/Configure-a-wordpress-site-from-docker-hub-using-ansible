@@ -27,7 +27,7 @@ ansible --version
 
 ## Configure Hosts file (Inventory file)
 
-The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using this file as my Hosts file, instead am creating new file with name "inventory". The headings in brackets are group names [amazon], which are used in classifying hosts and deciding what hosts you are controlling at what times and for what purpose. 
+The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using this file as my Hosts file, instead am creating new file with name "inventory". 
 
 ```bash
 # vim inventory
@@ -35,6 +35,7 @@ The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using thi
 [amazon]
  <your-server-private-ip> ansible_user="ec2-user" ansible_port=22 ansible_ssh_private_key_file="<your-private-key-file-name>"
  ```
+ The headings in brackets are group names [amazon], which are used in classifying hosts and deciding what hosts you are controlling at what times and for what purpose. 
  >  Make sure that you add the "your-server-private-ip" and "your-private-key-file-name" of worker instances on the manager server. Change the "your-private-key-file-name" permission to "400" !
   
  For checking SSH connection to worker server/instance:
