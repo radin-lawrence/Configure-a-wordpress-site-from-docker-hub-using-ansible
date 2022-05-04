@@ -23,6 +23,8 @@ to check the ansible version
 ```bash
 ansible --version
 ```
+![image](https://user-images.githubusercontent.com/100775027/166636421-e8f09bde-b510-4961-b779-f1d836fa56ad.png)
+
 ## Configure Hosts file (Inventory file)
 
 The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using this file as my Hosts file, instead am creating new file with name "inventory". The headings in brackets are group names [amazon], which are used in classifying hosts and deciding what hosts you are controlling at what times and for what purpose. 
@@ -40,7 +42,8 @@ The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using thi
   ```bash
   ansible -i inventory amazon -m ping
   ```
-  
+  ![image](https://user-images.githubusercontent.com/100775027/166636594-f379bfd0-9b8a-4d26-b54f-fdecd320ba69.png)
+
 ## Create playbook
 
 Playbooks are expressed in YAML format with a minimum of syntax.  A playbook is composed of one or more ‘plays’ in an ordered list. The terms ‘playbook’ and ‘play’ are sports analogies. Each play executes part of the overall goal of the playbook, running one or more tasks. Each task calls an Ansible module.
@@ -133,6 +136,7 @@ then add
 ```
  docker-py: python library for the Docker Remote API. It does everything the docker command does, but from within Python – run containers, manage them, pull/push images, etc.
  
+ 
  **Check syntax**
  
  Once the playbook is created, we need to check the syntax and execute the playbook:
@@ -140,6 +144,8 @@ then add
  ```bash
  ansible-playbook -i hosts docker-container --syntax-check
  ```
+ ![image](https://user-images.githubusercontent.com/100775027/166636654-f9480cdc-1ee3-4ee3-8383-1f758f539cf6.png)
+
 Execute the playbook
  
  ```bash
@@ -148,3 +154,8 @@ Execute the playbook
  
 ## Conclusion
 This is how we create wordpress site using docker-container with Ansible. Please contact me when you encounter any difficulty error while using this terrform code. Thank you and have a great day!
+
+ ### ⚙️ Connect with Me
+<p align="center">
+<a href="https://www.linkedin.com/in/radin-lawrence-8b3270102/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
+<a href="mailto:radin.lawrence@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
