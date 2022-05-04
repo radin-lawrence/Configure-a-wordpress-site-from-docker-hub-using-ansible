@@ -147,7 +147,7 @@ then add
  ```
  ![image](https://user-images.githubusercontent.com/100775027/166636654-f9480cdc-1ee3-4ee3-8383-1f758f539cf6.png)
 
-Execute the playbook
+**Execute the playbook**
  
  ```bash
  ansible-playbook -i hosts docker-container
