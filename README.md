@@ -33,7 +33,7 @@ The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using thi
 [amazon]
  <your-server-private-ip> ansible_user="ec2-user" ansible_port=22 ansible_ssh_private_key_file="<your-private-key-file-name>"
  ```
- > Make sure that you add the <your-server-private-ip> and <your-private-key-file-name> of worker instances on the manager server. Change the <your-private-key-file-name> permission to "400" !
+ >  Make sure that you add the "your-server-private-ip" and "your-private-key-file-name" of worker instances on the manager server. Change the "your-private-key-file-name" permission to "400" !
   
  For checking SSH connection to worker server/instance:
   
@@ -41,3 +41,110 @@ The orginal Hosts file for Ansible is "/etc/ansible/hosts", but am not using thi
   ansible -i inventory amazon -m ping
   ```
   
+## Create playbook
+
+Playbooks are expressed in YAML format with a minimum of syntax.  A playbook is composed of one or more ‘plays’ in an ordered list. The terms ‘playbook’ and ‘play’ are sports analogies. Each play executes part of the overall goal of the playbook, running one or more tasks. Each task calls an Ansible module.
+
+Here we are going to write the yml file for creating wordpress site using docker container:
+
+```bash
+vim docker-container
+```
+then add
+
+```bash
+---
+
+- name: "creating wordpress using ansible"
+  hosts: amazon
+  become: true
+  vars:
+    packages:
+      - docker
+      - python-pip
+    users:
+      - "ec2-user"
+    db_volume: db_data
+    wp_volume: wp_data
+  tasks:
+    
+    - name: "installin pip and docker"
+      yum:
+        name: "{{packages}}"
+        state: present
+
+    - name: "installing docker-py"
+      pip:
+        name: docker-py
+        state: present
+
+    - name: " add the {{users}} to docker grp"
+      user:
+        name: "{{item}}"
+        groups: docker
+        append: yes
+      with_items:
+        - "{{users}}"
+
+    - name: "Restarting and enabling docker service"
+      service:
+        name: docker
+        state: restarted
+        enabled: true
+
+    - name: "reate a network"
+      docker_network:
+        name: mynetwrk
+
+    - name: "Launching mysql container"
+      docker_container:
+        name: mysql
+        image: mysql:latest
+        state: started
+        recreate: yes
+        volumes:
+          - "{{ db_volume }}:/var/lib/mysql"
+        env: 
+          MYSQL_ROOT_PASSWORD: root@123
+          MYSQL_DATABASE: uber
+          MYSQL_USER: uber
+          MYSQL_PASSWORD: uber@123
+        networks:
+          - name: mynetwrk
+
+    - name: "Launching wordpress container"
+      docker_container:
+        name: wp
+        image: wordpress:latest
+        state: started
+        recreate: yes
+        volumes:
+          - "{{wp_volume}}:/var/www/html"
+        env: 
+          WORDPRESS_DB_HOST: mysql
+          WORDPRESS_DB_USER: uber
+          WORDPRESS_DB_PASSWORD: uber@123
+          WORDPRESS_DB_NAME: uber
+        networks:
+          - name: mynetwrk
+        ports:
+          - "80:80"
+
+```
+ docker-py: python library for the Docker Remote API. It does everything the docker command does, but from within Python – run containers, manage them, pull/push images, etc.
+ 
+ **Check syntax**
+ 
+ Once the playbook is created, we need to check the syntax and execute the playbook:
+ 
+ ```bash
+ ansible-playbook -i hosts docker-container --syntax-check
+ ```
+Execute the playbook
+ 
+ ```bash
+ ansible-playbook -i hosts docker-container
+ ```
+ 
+## Conclusion
+This is how we create wordpress site using docker-container with Ansible. Please contact me when you encounter any difficulty error while using this terrform code. Thank you and have a great day!
