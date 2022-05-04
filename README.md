@@ -143,14 +143,14 @@ then add
  Once the playbook is created, we need to check the syntax and execute the playbook:
  
  ```bash
- ansible-playbook -i hosts docker-container --syntax-check
+ ansible-playbook -i inventory docker-container --syntax-check
  ```
  ![image](https://user-images.githubusercontent.com/100775027/166636654-f9480cdc-1ee3-4ee3-8383-1f758f539cf6.png)
 
 **Execute the playbook**
  
  ```bash
- ansible-playbook -i hosts docker-container
+ ansible-playbook -i inventory docker-container
  ```
  Now our setup is complete and you can point your server public IP to the domain name.
  ![image](https://user-images.githubusercontent.com/100775027/166637067-2f2f0b3d-e17b-4626-bdb2-8672fb2ac9cf.png)
